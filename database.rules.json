@@ -1,0 +1,22 @@
+{
+  "rules": {
+    "admins": {
+      ".read": false,
+      ".write": false
+    },
+    "appointments": {
+      ".read": "auth.token.admin == true",
+      ".write": false
+    },
+    "mikvaot": {
+      ".read": true,
+      ".write": false
+    },
+    "users": {
+      "$uid": {
+        ".read": "$uid == auth.uid",
+        ".write": false
+      }
+    }
+  }
+}

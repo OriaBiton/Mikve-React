@@ -1,25 +1,39 @@
-import logo from './logo.svg';
-import './App.css';
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import { LoadingProvider } from './context/LoadingContext';
+import { AuthProvider } from './context/AuthContext';
+import { AppointmentProvider } from './context/AppointmentContext';
 
-function App() {
+import Header from './components/Header';
+import Nav from './components/Nav';
+import Container from './components/Container';
+import Loading from './components/Loading';
+import Auth from './components/Auth/Auth';
+import Settings from './components/Settings';
+import Home from './components/Home';
+import ChooseMikve from './components/ChooseMikve';
+import ChooseTime from './components/ChooseTime';
+
+export default function App(){
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <BrowserRouter>
+      <Header />
+      <AuthProvider>
+        <Nav />
+        <Container>
+          <LoadingProvider>
+            <Loading />
+            <Auth />
+            <AppointmentProvider>
+              <Switch>
+                <Route exact path='/' component={Home} />
+                <Route path='/settings' component={Settings} />
+                <Route path='/choose-mikve' component={ChooseMikve} />
+                <Route path='/time' component={ChooseTime} />
+              </Switch>
+            </AppointmentProvider>
+          </LoadingProvider>
+        </Container>
+      </AuthProvider>
+    </BrowserRouter>      
   );
 }
-
-export default App;
